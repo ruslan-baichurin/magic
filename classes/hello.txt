@@ -1,0 +1,10 @@
+one=1
+two=2
+three=3
+two=22
+four=4
+five=5
+six=6
+seven=7
+eleven=11
+twelve=12
