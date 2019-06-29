@@ -14,10 +14,7 @@ class Node:
     def has_value(self, value):
         """Method to compare the value with the node data"""
 
-        if self.data == value:
-            return True
-        else:
-            return False
+        return self.data == value
 
 
 class SinglyLinkedList:
@@ -54,14 +51,14 @@ class SinglyLinkedList:
         return count
 
     def output_list(self):
-        """Method to output the values of each node in the list"""
-
         current_node = self.head
+        out = ''
 
         while current_node is not None:
-            print(current_node.data)
+            out += str(current_node.data) + ' -> '
 
             current_node = current_node.next_node
+        print(out[:-4])
 
     def unordered_search(self, value):
         """Method to return a list of nodes that have the input value"""
@@ -119,11 +116,10 @@ class DoublyLinkedList:
             self.head = item
             item.previous_node = None
             item.next_node = None
-            self.tail = item
         else:
             self.tail.next_node = item
             item.previous_node = self.tail
-            self.tail = item
+        self.tail = item
 
         return
 
@@ -167,14 +163,14 @@ class DoublyLinkedList:
         return count
 
     def output_list(self):
-        """Method to output the values of each node in the list"""
-
         current_node = self.head
+        out = ''
 
         while current_node is not None:
-            print(current_node.data)
-
+            out += str(current_node.data) + ' -> '
             current_node = current_node.next_node
+
+        print(out[:-4])
 
     def unordered_search(self, value):
         """Method to return a list of nodes that have the input value"""
@@ -205,32 +201,23 @@ def circular(node):
 
     return False
 
-node1 = Node(10)
-node2 = Node(9.6)
-node3 = Node('New York')
-node4 = Node(10)
+sll = SinglyLinkedList()
 
-node1.next_node = node2
-node2.next_node = node3
-node3.next_node = node4
-# node4.next_node = node1
+sll.add_node(10)
+sll.add_node(20)
+sll.add_node(10)
+sll.add_node('New York')
+sll.output_list()
+print(sll.list_length())
+print(sll.unordered_search(10))
+sll.remove_item_by_id(3)
+sll.output_list()
 
-print(circular(node1))
 
+dll = DoublyLinkedList()
 
-
-# track = SinglyLinkedList()
-# # track = DoublyLinkedList()
-# print(f"The track length is {track.list_length()}")
-#
-# for item in [node1, node2, node3, node4]:
-#     track.add_node(item)
-#     print(f"The track length is {track.list_length()}")
-#     track.output_list()
-#
-# results = track.unordered_search(10)
-# print(results)
-#
-# track.remove_item_by_id(4)
-# print()
-# track.output_list()
+dll.add_node(10)
+dll.add_node(20)
+dll.add_node(10)
+dll.add_node('New York')
+dll.output_list()

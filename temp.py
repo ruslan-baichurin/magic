@@ -1,70 +1,42 @@
-def make_multiplier_of(n):
-    def multiplier(x):
-        return x * n
+def fibo_iter(n: int) -> int:
+    if n < 2:
+        return n
 
-    return multiplier
+    last, next = 0, 1
 
+    for _ in range(1, n):
+        last, next = next, next + last
 
-times3 = make_multiplier_of(3)
-times5 = make_multiplier_of(5)
-
-# print(times3(9))
-# print(times5(3))
-# print(times5(times3(2)))
+    return next
 
 
-def my_func(n):
-    funcs = []
-    def printer():
-        print()
+def fibo_naive(n: int) -> int:
+    if n < 2:
+        return n
 
-    for i in range(n):
-        funcs.append(printer)
-
-    return funcs
-
-hello = my_func(5)
-for i in range(5):
-    hello[i](4)
-
-def print_msg(msg):
-    def printer():
-        print(msg)
-
-    return printer
+    return fibo_naive(n - 1) + fibo_naive(n - 2)
 
 
-another = print_msg('Bye')
-del print_msg
-another()
-print_msg('Hi')
+from typing import Dict
+
+memo: Dict[int, int] = {0: 0, 1: 1}
 
 
-def my_func(name):
-    print('Hello', name)
+def fibo_memo(n: int) -> int:
+    if n not in memo:
+        memo[n] = fibo_memo(n - 1) + fibo_memo(n - 2)
+
+    return memo[n]
+
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fibo_lru(n: int) -> int:
+    if n < 2:
+        return n
+    return fibo_lru(n - 1) + fibo_lru(n - 2)
 
 
-def my_func2(name):
-    print('Good bye', name)
+print(fibo_lru(200))
 
 
-def print_my_func(f, name, n):
-    for i in range(n):
-        f(name)
-
-
-# print_my_func(my_func, 'Nick', 3)
-# print_my_func(my_func2, 'Nick', 3)
-
-def create_embedded_func(f, n):
-    def repeater(name):
-        print_my_func(f, name, n)
-
-    return repeater
-
-ff = create_embedded_func(my_func, 4)
-
-
-ff2 = create_embedded_func(my_func2, 2)
-ff2('Polina')
-ff('Nick')
